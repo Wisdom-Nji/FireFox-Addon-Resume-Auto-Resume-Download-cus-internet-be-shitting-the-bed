@@ -15,9 +15,22 @@ downloads.then((downloadItems)=>{
 */
 
 function resumeIfResumable( downloadDelta ) {
-	if( downloadDelta.canResume ) {
+	console.log("=> Resuming if Resumable");
+	if( downloadDelta.state && downloadDelta.state.current === "interrupted" && downloadDelta.canResume ) {
 		console.log(Date.now(), " - Resuming download");
-		//browser.downloads.resume( downloadDelta.id );
+		let state = browser.downloads.resume( downloadDelta.id );
+		state.then((error)=> {
+			if(error) {
+				//sleep and continue
+				setTimeout(()=> {
+					resumeIfResumable( downloadDelta )
+				}, 10000);
+			}
+		})
+		console.log("Download Resumed successfully");
+	}
+	else {
+		console.log("Download isn't resumable");
 	}
 }
 browser.downloads.onChanged.addListener(resumeIfResumable);
