@@ -1,3 +1,4 @@
+/*
 var downloads = browser.downloads.search({});
 downloads.then((downloadItems)=>{
 	console.log(downloadItems)
@@ -11,3 +12,12 @@ downloads.then((downloadItems)=>{
 		browser.downloads.download({url: downloadItems[i].url})
 	}
 })
+*/
+
+function resumeIfResumable( downloadDelta ) {
+	if( downloadDelta.canResume ) {
+		console.log(Date.now(), " - Resuming download");
+		//browser.downloads.resume( downloadDelta.id );
+	}
+}
+browser.downloads.onChanged.addListener(resumeIfResumable);
