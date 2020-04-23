@@ -1,12 +1,10 @@
 {
 	"manifest_version" : 2,
 	"name" : "auto_resume_firefox",
-	"version" : 0.1,
+	"version" : "0.1",
 	"description" : "saves my ass when downloads are gonna run overnight",
-	"content_scripts" : [
-	{
-		"matches" : ["*"],
-		"js" : ["main.js"]
+	"permissions" : ["downloads", "find"],
+	"background" : {
+		"scripts" : ["main.js"]
 	}
-	]
 }
